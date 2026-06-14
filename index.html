@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>자산 목표 대시보드</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">2026 자산 목표</p>
+          <h1>부동산 제외 순자산</h1>
+        </div>
+        <div class="target-pill">
+          <span>목표</span>
+          <strong>1억 8,000만 원</strong>
+        </div>
+      </header>
+
+      <nav class="tabs" aria-label="주요 화면">
+        <button class="tab active" data-view="dashboard" type="button">
+          <span aria-hidden="true">◐</span>
+          대시보드
+        </button>
+        <button class="tab" data-view="entry" type="button">
+          <span aria-hidden="true">＋</span>
+          주간 입력
+        </button>
+        <button class="tab" data-view="trend" type="button">
+          <span aria-hidden="true">⌁</span>
+          추이
+        </button>
+      </nav>
+
+      <main>
+        <section class="view active" id="dashboard">
+          <section class="hero-panel">
+            <div class="gauge-wrap">
+              <svg class="gauge" viewBox="0 0 240 150" role="img" aria-label="올해 목표 달성률">
+                <path class="gauge-track" d="M 30 120 A 90 90 0 0 1 210 120" pathLength="100" />
+                <path class="gauge-fill" id="goalGauge" d="M 30 120 A 90 90 0 0 1 210 120" pathLength="100" />
+              </svg>
+              <div class="gauge-copy">
+                <span id="goalRate">0%</span>
+                <strong>올해 목표 달성률</strong>
+              </div>
+            </div>
+            <div class="hero-metrics">
+              <div>
+                <span>현재 목표용 순자산</span>
+                <strong id="goalNetWorth">0원</strong>
+              </div>
+              <div>
+                <span>목표까지 남은 금액</span>
+                <strong id="remainingAmount">0원</strong>
+              </div>
+              <div>
+                <span>연말까지 매주 필요</span>
+                <strong id="weeklyNeed">0원</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="summary-grid" aria-label="요약">
+            <article class="metric-block">
+              <span>이번 주 변화</span>
+              <strong id="weeklyChange">0원</strong>
+            </article>
+            <article class="metric-block">
+              <span>최근 4주 평균</span>
+              <strong id="fourWeekAverage">0원</strong>
+            </article>
+            <article class="metric-block">
+              <span>참고 부동산</span>
+              <strong id="propertyValue">0원</strong>
+            </article>
+            <article class="metric-block">
+              <span>전체 참고 순자산</span>
+              <strong id="totalReference">0원</strong>
+            </article>
+          </section>
+
+          <section class="dashboard-grid">
+            <div class="panel">
+              <div class="panel-heading">
+                <h2>목표용 자산 구성</h2>
+                <p>대출은 차감 항목으로 별도 표시</p>
+              </div>
+              <div class="asset-composition">
+                <div class="donut" id="assetDonut" aria-label="자산 구성 차트"></div>
+                <div class="legend" id="assetLegend"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-heading">
+                <h2>이번 주 기록</h2>
+                <p id="latestDate">아직 입력 없음</p>
+              </div>
+              <div class="note-box" id="latestNote">주간 입력 화면에서 첫 기록을 남겨보세요.</div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="entry">
+          <section class="entry-layout">
+            <form class="entry-form" id="entryForm">
+              <div class="form-head">
+                <div>
+                  <p class="eyebrow">주 1회 업데이트</p>
+                  <h2>이번 주 자산 입력</h2>
+                </div>
+                <button class="secondary-button" id="clearData" type="button">데이터 비우기</button>
+              </div>
+
+              <label>
+                날짜
+                <input id="date" name="date" type="date" required />
+              </label>
+
+              <div class="input-grid">
+                <label>
+                  현금
+                  <input id="cash" name="cash" inputmode="numeric" type="text" placeholder="예: 25000000" />
+                </label>
+                <label>
+                  주식
+                  <input id="stocks" name="stocks" inputmode="numeric" type="text" placeholder="예: 60000000" />
+                </label>
+                <label>
+                  연금
+                  <input id="pension" name="pension" inputmode="numeric" type="text" placeholder="예: 30000000" />
+                </label>
+                <label>
+                  금
+                  <input id="gold" name="gold" inputmode="numeric" type="text" placeholder="예: 8000000" />
+                </label>
+                <label>
+                  대출
+                  <input id="debt" name="debt" inputmode="numeric" type="text" placeholder="예: 12000000" />
+                </label>
+                <label>
+                  부동산 참고가치
+                  <input id="property" name="property" inputmode="numeric" type="text" placeholder="목표 달성률에는 제외" />
+                </label>
+              </div>
+
+              <label>
+                메모
+                <textarea id="memo" name="memo" rows="4" placeholder="예: 상여금 입금, 주식 평가액 변화, 대출 일부 상환"></textarea>
+              </label>
+
+              <div class="entry-preview">
+                <span>저장될 목표용 순자산</span>
+                <strong id="entryPreview">0원</strong>
+              </div>
+
+              <button class="primary-button" type="submit">저장</button>
+            </form>
+
+            <aside class="panel entry-help">
+              <h2>계산 기준</h2>
+              <p>현금 + 주식 + 연금 + 금 - 대출</p>
+              <p>부동산은 참고용으로만 저장하고 목표 달성률에는 넣지 않습니다.</p>
+              <div class="mini-list" id="recentEntries"></div>
+            </aside>
+          </section>
+        </section>
+
+        <section class="view" id="trend">
+          <section class="panel trend-panel">
+            <div class="panel-heading">
+              <h2>목표용 순자산 추이</h2>
+              <p>주간 입력값 기준</p>
+            </div>
+            <svg class="line-chart" id="netWorthChart" viewBox="0 0 760 320" role="img" aria-label="주차별 목표용 순자산 추이"></svg>
+          </section>
+
+          <section class="panel trend-panel">
+            <div class="panel-heading">
+              <h2>자산군별 변화</h2>
+              <p>현금, 주식, 연금, 금, 대출, 부동산</p>
+            </div>
+            <div class="stacked-bars" id="assetBars"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
